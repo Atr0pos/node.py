@@ -1,14 +1,22 @@
 import socket
 import thread
+import client
+import room
 
-def on_new_client(clientsocket,addr):
-    while True:
-	    msg = clientsocket.recv(1024) 
-	    #do some checks and if msg == someWeirdSignal: break:
-	    #print addr, ' >> ', msg
-	    msg = raw_input('SERVER >> ') 
-	    #Maybe some code to compute the last digit of PI, play game or anything else can go here and when you are done.
-	    #clientsocket.send(msg) 
+clients = {}
+rooms = {}
+
+def on_new_client(data,addr):
+	clients[addr] = data
+
+
+def on_existing_client():
+	pass
+
+def on_create_room_request(room_name):
+
+	pass
+
 
 
 hostname = "127.0.0.1"
@@ -16,7 +24,7 @@ port = 5005
 
 print "Starting server..."
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # UDP
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
 
 print "Server started...."
 
@@ -24,18 +32,20 @@ sock.bind((hostname, port))
 
 print "Waiting for clients..."
 
-sock.listen(5)
-
-
-
-
 
 while 1:
-	c, addr = sock.accept()
-	print "Connection recieved...", addr
-	thread.start_new_thread(on_new_client,(c,addr))
+	data, addr = sock.recvfrom(1024)
+	if addr in clients:
 
-socket.close()
+	clients[addr] = Id
+	print "Connection recieved...", addr
+
+	thread.start_new_thread()
+
+	print data
+
+
+sock.close()
 
 
 #clientsocket.close()
