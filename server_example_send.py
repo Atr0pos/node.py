@@ -6,7 +6,10 @@ MESSAGE = "Hello, World!"
 
 sock = socket.socket(socket.AF_INET, # Internet
                      socket.SOCK_DGRAM) # UDP
-sock.sendto("connection" ,(UDP_IP,UDP_PORT))
+
+data = '{"username": "pbrady"}'
+
+sock.sendto(data ,(UDP_IP,UDP_PORT))
 
 while 1:
 	msg = raw_input("Message: ")
